@@ -1,0 +1,255 @@
+{
+  "exam_type": "CAT2",
+  "part_a": [
+    {
+      "number": 1,
+      "unit": "CAT1",
+      "co": "CO1",
+      "blooms": "L1",
+      "question": "List the key concepts in Natural Language Processing.",
+      "options": {
+        "A": "Tokenization",
+        "B": "Dependency parsing",
+        "C": "Named entity recognition",
+        "D": "Part-of-speech tagging"
+      },
+      "answer": "A",
+      "marks": 1
+    },
+    {
+      "number": 2,
+      "unit": "CAT1",
+      "co": "CO1",
+      "blooms": "L2",
+      "question": "Explain the significance of N-grams in Natural Language Processing.",
+      "options": {
+        "A": "Are used for part-of-speech tagging.",
+        "B": "Help in understanding the frequency of words in a language.",
+        "C": "Are used to evaluate the performance of language models.",
+        "D": "Are essential for smoothing techniques in language modeling."
+      },
+      "answer": "B",
+      "marks": 1
+    },
+    {
+      "number": 3,
+      "unit": "CAT1",
+      "co": "CO1",
+      "blooms": "L1",
+      "question": "Name the smoothing techniques used in language modeling.",
+      "options": {
+        "A": "Add-k smoothing",
+        "B": "Kneser-Ney smoothing",
+        "C": "All of the above",
+        "D": "Backoff smoothing"
+      },
+      "answer": "C",
+      "marks": 1
+    },
+    {
+      "number": 4,
+      "unit": "CAT1",
+      "co": "CO1",
+      "blooms": "L2",
+      "question": "Describe the process of part-of-speech tagging.",
+      "options": {
+        "A": "Is a hybrid approach that combines rule-based and statistical methods.",
+        "B": "Is a statistical approach that uses machine learning algorithms to identify the part of speech.",
+        "C": "Involves identifying the grammatical category of each word in a sentence.",
+        "D": "Is a rule-based approach that uses a dictionary to identify the part of speech."
+      },
+      "answer": "C",
+      "marks": 1
+    },
+    {
+      "number": 5,
+      "unit": "CAT1",
+      "co": "CO1",
+      "blooms": "L1",
+      "question": "Identify the key components of a context-free grammar.",
+      "options": {
+        "A": "Non-terminal symbols",
+        "B": "Production rules",
+        "C": "All of the above",
+        "D": "Terminal symbols"
+      },
+      "answer": "C",
+      "marks": 1
+    },
+    {
+      "number": 6,
+      "unit": "CAT2",
+      "co": "CO1",
+      "blooms": "L2",
+      "question": "Explain the concept of named entity recognition.",
+      "options": {
+        "A": "Involves identifying the named entities in a sentence.",
+        "B": "Is a hybrid approach that combines rule-based and statistical methods.",
+        "C": "Is a rule-based approach that uses a dictionary to identify the named entities.",
+        "D": "Is a statistical approach that uses machine learning algorithms to identify the named entities."
+      },
+      "answer": "A",
+      "marks": 1
+    },
+    {
+      "number": 7,
+      "unit": "CAT2",
+      "co": "CO1",
+      "blooms": "L1",
+      "question": "List the types of named entities.",
+      "options": {
+        "A": "Location",
+        "B": "Person",
+        "C": "Organization",
+        "D": "All of the above"
+      },
+      "answer": "D",
+      "marks": 1
+    },
+    {
+      "number": 8,
+      "unit": "CAT2",
+      "co": "CO1",
+      "blooms": "L2",
+      "question": "Describe the process of dependency parsing.",
+      "options": {
+        "A": "Is a hybrid approach that combines rule-based and statistical methods.",
+        "B": "Is a rule-based approach that uses a dictionary to identify the dependencies.",
+        "C": "Is a statistical approach that uses machine learning algorithms to identify the dependencies.",
+        "D": "Involves identifying the grammatical dependencies between words in a sentence."
+      },
+      "answer": "D",
+      "marks": 1
+    },
+    {
+      "number": 9,
+      "unit": "CAT2",
+      "co": "CO1",
+      "blooms": "L1",
+      "question": "Identify the key components of a dependency grammar.",
+      "options": {
+        "A": "Dependency relation",
+        "B": "Head word",
+        "C": "All of the above",
+        "D": "Dependent word"
+      },
+      "answer": "C",
+      "marks": 1
+    },
+    {
+      "number": 10,
+      "unit": "CAT3",
+      "co": "CO1",
+      "blooms": "L3",
+      "question": "Implement a rule-based system to tackle morphology and syntax of a language.",
+      "options": {
+        "A": "Context-free grammar to model the syntax of the language.",
+        "B": "Finite state transducer to model the morphology of the language.",
+        "C": "Combination of finite state transducer and context-free grammar to model the morphology and syntax of the language.",
+        "D": "Dependency grammar to model the syntax of the language."
+      },
+      "answer": "C",
+      "marks": 1
+    }
+  ],
+  "part_b": [
+    {
+      "number": 11,
+      "question": "What are the primary differences between Kneser-Ney Smoothing and other smoothing techniques in the context of N-gram language models?",
+      "unit": "2",
+      "co": "CO2",
+      "blooms": "L1",
+      "answer": "1. Kneser-Ney Smoothing is a type of smoothing technique that takes into account the frequency of words in the training data. 2. It uses a combination of back-off and interpolation to estimate the probability of a word given a context. 3. This approach is more accurate than other smoothing techniques in predicting the probability of rare words. 4. Kneser-Ney Smoothing is particularly useful in large language models where the frequency of words is skewed. 5. It is also more computationally efficient than other smoothing techniques. 6. The technique has been widely used in speech recognition and natural language processing applications. 7. However, it can be sensitive to the choice of parameters and the quality of the training data.",
+      "marks": 10
+    },
+    {
+      "number": 12,
+      "question": "Which of the is a key challenge in part-of-speech tagging using rule-based approaches?",
+      "unit": "2",
+      "co": "CO3",
+      "blooms": "L1",
+      "answer": "1. Handling out-of-vocabulary words is a significant challenge in Part-of-Speech Tagging using rule-based approaches. 2. The rules may not be able to capture the nuances of language, leading to inaccurate tagging. 3. The approach can be computationally expensive, especially for large datasets. 4. Rule-based approaches may not be able to handle ambiguity in language, leading to inconsistent tagging. 5. The rules may need to be updated frequently to keep up with changes in language. 6. The approach can be sensitive to the quality of the training data. 7. However, rule-based approaches can be more interpretable and transparent than other approaches.",
+      "marks": 10
+    },
+    {
+      "number": 13,
+      "question": "How does the use of Hidden Markov Models (HMMs) impact the accuracy of Named Entity Recognition (NER) systems?",
+      "unit": "2",
+      "co": "CO4",
+      "blooms": "L2",
+      "answer": "1. HMMs can be used to model the probability of a sequence of observations, which can be useful in NER. 2. The use of HMMs can improve the accuracy of NER systems by capturing the temporal relationships between entities. 3. However, HMMs can be computationally expensive to train and use. 4. The approach can be sensitive to the choice of parameters and the quality of the training data. 5. HMMs can be used to model the probability of a sequence of entities, which can be useful in NER. 6. The use of HMMs can improve the robustness of NER systems to noise and variability in the data. 7. However, HMMs may not be able to capture the nuances of language, leading to inaccurate tagging.",
+      "marks": 10
+    },
+    {
+      "number": 14,
+      "question": "Formulate a strategy to handle the challenge of ambiguity in Context-Free Grammars.",
+      "unit": "3",
+      "co": "CO3",
+      "blooms": "L6",
+      "answer": "1. Ambiguity can be handled by using a parser that can resolve conflicts based on the context of the sentence. 2. Another approach is to use a grammar that is designed to minimize ambiguity. 3. A parser can also be designed to use heuristics to resolve ambiguity. 4. In addition, a grammar can be designed to use a combination of context-free and context-sensitive rules to reduce ambiguity. 5. Furthermore, a parser can use machine learning algorithms to learn from the data and improve its ability to resolve ambiguity. 6. A grammar can also be designed to use a set of predefined rules to resolve ambiguity. 7. Additionally, a parser can use a combination of rule-based and machine learning-based approaches to resolve ambiguity.",
+      "marks": 10
+    },
+    {
+      "number": 15,
+      "question": "Design a parser that can handle the challenge of CKY Dynamic Programming parsing.",
+      "unit": "3",
+      "co": "CO2",
+      "blooms": "L6",
+      "answer": "1. A parser can be designed to use a dynamic programming algorithm that can efficiently compute the parse tree. 2. The parser can use a CKY chart to keep track of the parse trees that have been computed so far. 3. The parser can also use a set of predefined rules to guide the computation of the parse tree. 4. In addition, the parser can use machine learning algorithms to learn from the data and improve its ability to compute the parse tree. 5. Furthermore, the parser can use a combination of rule-based and machine learning-based approaches to compute the parse tree. 6. The parser can also use a set of heuristics to guide the computation of the parse tree. 7. Additionally, the parser can use a combination of CKY and chart parsing algorithms to improve its efficiency.",
+      "marks": 10
+    },
+    {
+      "number": 16,
+      "question": "Evaluate the effectiveness of Dependency Relations in parsing English sentences.",
+      "unit": "3",
+      "co": "CO4",
+      "blooms": "L5",
+      "answer": "1. Dependency Relations can be effective in parsing English sentences because they can capture the grammatical structure of the sentence. 2. The use of Dependency Relations can improve the accuracy of the parser by reducing the number of incorrect parses. 3. Dependency Relations can also be used to improve the efficiency of the parser by reducing the number of computations required. 4. In addition, Dependency Relations can be used to improve the robustness of the parser by reducing its sensitivity to noise in the input data. 5. Furthermore, Dependency Relations can be used to improve the interpretability of the parser by providing a clear and concise representation of the grammatical structure of the sentence. 6. The use of Dependency Relations can also improve the scalability of the parser by allowing it to handle larger input data. 7. Additionally, Dependency Relations can be used to improve the flexibility of the parser by allowing it to handle a wide range of input data.",
+      "marks": 10
+    }
+  ],
+  "distributions": {
+    "co": {
+      "CO1": 10,
+      "CO2": 20,
+      "CO3": 20,
+      "CO4": 20,
+      "CO5": 0
+    },
+    "blooms": {
+      "L1": 25,
+      "L2": 14,
+      "L3": 1,
+      "L4": 0,
+      "L5": 10,
+      "L6": 20
+    }
+  },
+  "cos_definitions": [
+    {
+      "id": "CO1",
+      "description": "Recognize the concepts and techniques of Natural Language Processing",
+      "blooms": "L2"
+    },
+    {
+      "id": "CO2",
+      "description": "Design and develop NLP Models",
+      "blooms": "L5"
+    },
+    {
+      "id": "CO3",
+      "description": "Implement a rule based system to tackle morphology/syntax of a language",
+      "blooms": "L4"
+    },
+    {
+      "id": "CO4",
+      "description": "Design a tag set to be used for statistical processing for real-time applications",
+      "blooms": "L5"
+    },
+    {
+      "id": "CO5",
+      "description": "Formulate natural language algorithms for processing Linguistic Information.",
+      "blooms": "L3"
+    }
+  ]
+}

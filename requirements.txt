@@ -1,0 +1,7 @@
+streamlit
+groq
+pandas
+python-docx
+PyPDF2
+fpdf2
+matplotlib

@@ -1,0 +1,255 @@
+{
+  "exam_type": "CAT2",
+  "part_a": [
+    {
+      "number": 1,
+      "unit": "2",
+      "co": "CO1",
+      "blooms": "L1",
+      "question": "List the primary steps involved in data preprocessing.",
+      "options": {
+        "A": "Thirdly, data normalization is done.",
+        "B": "Firstly, data cleaning is performed.",
+        "C": "Secondly, data transformation is applied.",
+        "D": "Lastly, data feature scaling is considered."
+      },
+      "answer": "B",
+      "marks": 1
+    },
+    {
+      "number": 2,
+      "unit": "2",
+      "co": "CO1",
+      "blooms": "L2",
+      "question": "Explain the significance of data preprocessing in machine learning.",
+      "options": {
+        "A": "Increases model complexity.",
+        "B": "Enhances model interpretability.",
+        "C": "Reduces model overfitting.",
+        "D": "Improves model generalizability."
+      },
+      "answer": "D",
+      "marks": 1
+    },
+    {
+      "number": 3,
+      "unit": "2",
+      "co": "CO1",
+      "blooms": "L1",
+      "question": "Name the common techniques used for data normalization.",
+      "options": {
+        "A": "Log transformation and Square root.",
+        "B": "Standardization and Min-Max Scaler.",
+        "C": "Z-score normalization and Robust Scaler.",
+        "D": "Data binning and Quantile transformation."
+      },
+      "answer": "B",
+      "marks": 1
+    },
+    {
+      "number": 4,
+      "unit": "2",
+      "co": "CO2",
+      "blooms": "L3",
+      "question": "Demonstrate the application of logistic regression for binary classification.",
+      "options": {
+        "A": "It is used for regression tasks.",
+        "B": "The cost function is minimized using gradient descent.",
+        "C": "The model is evaluated using accuracy metric.",
+        "D": "Logistic regression is used for multiclass classification."
+      },
+      "answer": "B",
+      "marks": 1
+    },
+    {
+      "number": 5,
+      "unit": "2",
+      "co": "CO2",
+      "blooms": "L2",
+      "question": "Describe the process of feature selection in supervised learning.",
+      "options": {
+        "A": "Improves model interpretability.",
+        "B": "Involves selecting the most relevant features.",
+        "C": "Increases model complexity.",
+        "D": "Reduces the dimensionality of the data."
+      },
+      "answer": "B",
+      "marks": 1
+    },
+    {
+      "number": 6,
+      "unit": "3",
+      "co": "CO3",
+      "blooms": "L3",
+      "question": "Implement the K-Means clustering algorithm for unsupervised learning.",
+      "options": {
+        "A": "The algorithm converges to a local minimum.",
+        "B": "K-Means clustering is used for regression tasks.",
+        "C": "The model is evaluated using silhouette score.",
+        "D": "It is used for dimensionality reduction."
+      },
+      "answer": "C",
+      "marks": 1
+    },
+    {
+      "number": 7,
+      "unit": "3",
+      "co": "CO3",
+      "blooms": "L2",
+      "question": "Explain the concept of hierarchical clustering in unsupervised learning.",
+      "options": {
+        "A": "Reduces the dimensionality of the data.",
+        "B": "Involves partitioning the data into clusters.",
+        "C": "Increases model complexity.",
+        "D": "Improves model interpretability."
+      },
+      "answer": "B",
+      "marks": 1
+    },
+    {
+      "number": 8,
+      "unit": "3",
+      "co": "CO3",
+      "blooms": "L1",
+      "question": "Identify the primary advantages of Principal Component Analysis (PCA).",
+      "options": {
+        "A": "Improves model interpretability.",
+        "B": "Increases model complexity.",
+        "C": "Reduces model overfitting.",
+        "D": "Reduces the dimensionality of the data."
+      },
+      "answer": "D",
+      "marks": 1
+    },
+    {
+      "number": 9,
+      "unit": "3",
+      "co": "CO4",
+      "blooms": "L5",
+      "question": "Evaluate the performance of a neural network using cross-validation.",
+      "options": {
+        "A": "The results are averaged using mean squared error.",
+        "B": "It is used for hyperparameter tuning.",
+        "C": "Cross-validation is used for model selection.",
+        "D": "The model is evaluated using accuracy metric."
+      },
+      "answer": "D",
+      "marks": 1
+    },
+    {
+      "number": 10,
+      "unit": "3",
+      "co": "CO4",
+      "blooms": "L4",
+      "question": "Analyze the effect of regularization on the performance of a neural network.",
+      "options": {
+        "A": "Regularization reduces model overfitting.",
+        "B": "The results are averaged using mean squared error.",
+        "C": "It increases model complexity.",
+        "D": "The model is evaluated using cross-validation."
+      },
+      "answer": "A",
+      "marks": 1
+    }
+  ],
+  "part_b": [
+    {
+      "number": 11,
+      "question": "Formulate a predictive model to classify customer segments based on their purchasing behavior.",
+      "unit": "2",
+      "co": "CO2",
+      "blooms": "L6",
+      "answer": "1. The predictive model can be formulated using supervised learning algorithms such as decision trees or random forests to classify customer segments based on their purchasing behavior.\n2. The model can be trained on a dataset containing customer information and purchasing history to identify patterns and relationships between customer characteristics and purchasing behavior.\n3. The model can be evaluated using metrics such as accuracy, precision, and recall to determine its effectiveness in classifying customer segments.\n4. The model can be used to identify high-value customer segments and develop targeted marketing campaigns to increase sales and revenue.\n5. The model can be updated regularly to reflect changes in customer behavior and preferences.\n6. The model can be integrated with other business systems to provide a comprehensive view of customer behavior and preferences.\n7. The model can be used to identify opportunities for upselling and cross-selling to increase average order value.\n8. The model can be used to develop personalized marketing campaigns to increase customer engagement and loyalty.",
+      "marks": 10
+    },
+    {
+      "number": 12,
+      "question": "Develop a clustering algorithm to segment customers based on their demographic and behavioral characteristics.",
+      "unit": "2",
+      "co": "CO3",
+      "blooms": "L6",
+      "answer": "1. The clustering algorithm can be developed using unsupervised learning techniques such as k-means or hierarchical clustering to segment customers based on their demographic and behavioral characteristics.\n2. The algorithm can be trained on a dataset containing customer information and behavioral data to identify patterns and relationships between customer characteristics.\n3. The algorithm can be evaluated using metrics such as silhouette score and calinski-harabasz index to determine its effectiveness in segmenting customers.\n4. The algorithm can be used to identify distinct customer segments and develop targeted marketing campaigns to increase sales and revenue.\n5. The algorithm can be updated regularly to reflect changes in customer behavior and preferences.\n6. The algorithm can be integrated with other business systems to provide a comprehensive view of customer behavior and preferences.\n7. The algorithm can be used to identify opportunities for upselling and cross-selling to increase average order value.\n8. The algorithm can be used to develop personalized marketing campaigns to increase customer engagement and loyalty.",
+      "marks": 10
+    },
+    {
+      "number": 13,
+      "question": "Design a neural network architecture to classify customer complaints based on their sentiment and intent.",
+      "unit": "2",
+      "co": "CO4",
+      "blooms": "L6",
+      "answer": "1. The neural network architecture can be designed using a combination of convolutional and recurrent neural networks to classify customer complaints based on their sentiment and intent.\n2. The architecture can be trained on a dataset containing customer complaints and sentiment labels to identify patterns and relationships between complaint text and sentiment.\n3. The architecture can be evaluated using metrics such as accuracy, precision, and recall to determine its effectiveness in classifying customer complaints.\n4. The architecture can be used to identify high-value customer complaints and develop targeted resolution strategies to increase customer satisfaction.\n5. The architecture can be updated regularly to reflect changes in customer behavior and preferences.\n6. The architecture can be integrated with other business systems to provide a comprehensive view of customer behavior and preferences.\n7. The architecture can be used to identify opportunities for process improvements to increase efficiency and reduce costs.\n8. The architecture can be used to develop personalized resolution strategies to increase customer engagement and loyalty.",
+      "marks": 10
+    },
+    {
+      "number": 14,
+      "question": "How a strategy to apply K-Means clustering for data segmentation.",
+      "unit": "3",
+      "co": "CO3",
+      "blooms": "L2",
+      "answer": "1. K-Means clustering is a widely used unsupervised learning algorithm for data segmentation. 2. It partitions the data into K clusters based on the mean distance of the features. 3. The algorithm iteratively updates the cluster centroids and assigns each data point to the nearest cluster. 4. The process is repeated until convergence or a maximum number of iterations is reached. 5. K-Means clustering is sensitive to the initial placement of cluster centroids, which can affect the final clustering result. 6. To overcome this issue, various initialization methods such as random initialization or k-means++ can be employed. 7. The choice of the number of clusters (K) is a critical hyperparameter that requires careful tuning. 8. A common approach is to use the elbow method or silhouette analysis to determine the optimal value of K.",
+      "marks": 10
+    },
+    {
+      "number": 15,
+      "question": "Operate a dimensionality reduction technique to mitigate the Curse of Dimensionality.",
+      "unit": "3",
+      "co": "CO3",
+      "blooms": "L3",
+      "answer": "1. The Curse of Dimensionality refers to the phenomenon where high-dimensional data becomes increasingly sparse and difficult to analyze. 2. Dimensionality reduction techniques aim to reduce the number of features while preserving the essential information. 3. Principal Component Analysis (PCA) is a popular method for dimensionality reduction, which projects the data onto a lower-dimensional space using orthogonal transformations. 4. Another approach is to use feature selection methods, such as mutual information or recursive feature elimination, to select a subset of the most informative features. 5. Non-linear dimensionality reduction techniques, such as t-SNE or autoencoders, can also be employed to capture complex relationships in the data. 6. The choice of dimensionality reduction technique depends on the specific problem and data characteristics. 7. It is essential to evaluate the effectiveness of the chosen technique using metrics such as reconstruction error or clustering accuracy.",
+      "marks": 10
+    },
+    {
+      "number": 16,
+      "question": "Construct a probabilistic model to perform Independent Component Analysis (ICA) for feature extraction.",
+      "unit": "3",
+      "co": "CO3",
+      "blooms": "L6",
+      "answer": "1. Independent Component Analysis (ICA) is a technique for blind source separation, which aims to extract independent sources from mixed signals. 2. ICA assumes that the sources are statistically independent and non-Gaussian. 3. The FastICA algorithm is a popular implementation of ICA, which uses a fixed-point iteration scheme to find the independent components. 4. The algorithm starts with an initial estimate of the independent components and iteratively updates the estimate using a gradient descent approach. 5. The update rule involves computing the gradient of the negentropy function with respect to the independent components. 6. The algorithm converges when the gradient becomes zero or a maximum number of iterations is reached. 7. ICA is sensitive to the choice of the number of independent components, which requires careful tuning using techniques such as cross-validation.",
+      "marks": 10
+    }
+  ],
+  "distributions": {
+    "co": {
+      "CO1": 3,
+      "CO2": 12,
+      "CO3": 43,
+      "CO4": 12,
+      "CO5": 0
+    },
+    "blooms": {
+      "L1": 3,
+      "L2": 13,
+      "L3": 12,
+      "L4": 1,
+      "L5": 1,
+      "L6": 40
+    }
+  },
+  "cos_definitions": [
+    {
+      "id": "CO1",
+      "description": "Understand various machine learning algorithms and terminologies and perform data preprocessing",
+      "blooms": "L2"
+    },
+    {
+      "id": "CO2",
+      "description": "Apply appropriate supervised learning algorithms to design predictive models to solve any\r\ngiven problem",
+      "blooms": "L3"
+    },
+    {
+      "id": "CO3",
+      "description": "Apply appropriate unsupervised learning algorithms and develop applications for performing\r\nclustering and dimensionality reduction",
+      "blooms": "L3"
+    },
+    {
+      "id": "CO4",
+      "description": "Evaluate the solutions for complex problems using artificial neural networks and kernel\r\nmachines",
+      "blooms": "L5"
+    },
+    {
+      "id": "CO5",
+      "description": "Understand and apply probabilistic graphical models for suitable applications",
+      "blooms": "L2"
+    }
+  ]
+}

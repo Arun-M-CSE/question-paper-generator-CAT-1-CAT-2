@@ -1,0 +1,255 @@
+{
+  "exam_type": "CAT2",
+  "part_a": [
+    {
+      "number": 1,
+      "unit": "2",
+      "co": "CO1",
+      "blooms": "L1",
+      "question": "What are the primary challenges in implementing a cyber-physical system from a computational perspective?",
+      "options": {
+        "A": "Algorithmic complexity",
+        "B": "Network connectivity",
+        "C": "Hardware limitations",
+        "D": "Software integration"
+      },
+      "answer": "A",
+      "marks": 1
+    },
+    {
+      "number": 2,
+      "unit": "2",
+      "co": "CO2",
+      "blooms": "L1",
+      "question": "Which factor plays a critical role in ensuring real-time performance in a dense time system?",
+      "options": {
+        "A": "Memory allocation",
+        "B": "Scheduling algorithms",
+        "C": "Network latency",
+        "D": "Processor speed"
+      },
+      "answer": "B",
+      "marks": 1
+    },
+    {
+      "number": 3,
+      "unit": "2",
+      "co": "CO3",
+      "blooms": "L2",
+      "question": "How does one apply formal methods in designing cyber-physical systems?",
+      "options": {
+        "A": "Applying model checking",
+        "B": "Implementing software-based control",
+        "C": "Constructing hybrid automata",
+        "D": "Using timed automata"
+      },
+      "answer": "C",
+      "marks": 1
+    },
+    {
+      "number": 4,
+      "unit": "2",
+      "co": "CO4",
+      "blooms": "L1",
+      "question": "What are the primary safety assurance aspects in cyber-physical systems?",
+      "options": {
+        "A": "Sensor reliability",
+        "B": "Control algorithm stability",
+        "C": "Actuator performance",
+        "D": "Network security"
+      },
+      "answer": "B",
+      "marks": 1
+    },
+    {
+      "number": 5,
+      "unit": "2",
+      "co": "CO5",
+      "blooms": "L6",
+      "question": "Design a hybrid automata model for a cyber-physical system.",
+      "options": {
+        "A": "Constructing a timed automaton",
+        "B": "Implementing a software-based controller",
+        "C": "Using a finite state machine",
+        "D": "Applying a Petri net"
+      },
+      "answer": "A",
+      "marks": 1
+    },
+    {
+      "number": 6,
+      "unit": "3",
+      "co": "CO1",
+      "blooms": "L2",
+      "question": "Explain the significance of stability analysis in cyber-physical systems.",
+      "options": {
+        "A": "Enhancing sensor accuracy",
+        "B": "Reducing actuator latency",
+        "C": "Ensuring control performance",
+        "D": "Improving network reliability"
+      },
+      "answer": "C",
+      "marks": 1
+    },
+    {
+      "number": 7,
+      "unit": "3",
+      "co": "CO2",
+      "blooms": "L2",
+      "question": "How does one apply real-valued and dense time systems with software-based discrete automated control?",
+      "options": {
+        "A": "Implementing a control algorithm",
+        "B": "Using a scheduling algorithm",
+        "C": "Constructing a hybrid automaton",
+        "D": "Applying model checking"
+      },
+      "answer": "A",
+      "marks": 1
+    },
+    {
+      "number": 8,
+      "unit": "3",
+      "co": "CO3",
+      "blooms": "L4",
+      "question": "Analyze the impact of packet drop and noise on the performance of a cyber-physical system.",
+      "options": {
+        "A": "Improving actuator reliability",
+        "B": "Increasing network latency",
+        "C": "Reducing control performance",
+        "D": "Decreasing sensor accuracy"
+      },
+      "answer": "C",
+      "marks": 1
+    },
+    {
+      "number": 9,
+      "unit": "3",
+      "co": "CO4",
+      "blooms": "L1",
+      "question": "What are the primary software components in a cyber-physical system?",
+      "options": {
+        "A": "Actuator drivers",
+        "B": "Sensor interfaces",
+        "C": "Network protocols",
+        "D": "Control algorithms"
+      },
+      "answer": "D",
+      "marks": 1
+    },
+    {
+      "number": 10,
+      "unit": "3",
+      "co": "CO5",
+      "blooms": "L6",
+      "question": "Construct a hybrid automata model for a cyber-physical system with multiple sensors and actuators.",
+      "options": {
+        "A": "Constructing a timed automaton",
+        "B": "Applying a Petri net",
+        "C": "Implementing a software-based controller",
+        "D": "Using a finite state machine"
+      },
+      "answer": "A",
+      "marks": 1
+    }
+  ],
+  "part_b": [
+    {
+      "number": 11,
+      "question": "Formulate a comprehensive strategy to mitigate the adverse effects of packet drop on the performance of a cyber-physical system.",
+      "unit": "2",
+      "co": "CO2",
+      "blooms": "L6",
+      "answer": "1. Implementing a robust communication protocol that can adapt to changing network conditions.\n2. Utilizing error-correcting codes to detect and correct packet errors.\n3. Employing packet retransmission mechanisms to ensure reliable data transfer.\n4. Optimizing the system's scheduling algorithm to minimize packet drop rates.\n5. Implementing a feedback control mechanism to adjust the system's behavior in response to packet drop.\n6. Utilizing machine learning techniques to predict and prevent packet drop.\n7. Implementing a redundant communication architecture to ensure continued system operation in the event of packet drop.",
+      "marks": 10
+    },
+    {
+      "number": 12,
+      "question": "Develop a systematic approach to mapping software components to ECUs in a cyber-physical system, considering the impact of scheduling on system performance.",
+      "unit": "2",
+      "co": "CO2",
+      "blooms": "L6",
+      "answer": "1. Identify the software components that require real-time processing and allocate them to ECUs with sufficient processing power.\n2. Consider the communication overhead between ECUs and allocate components accordingly.\n3. Evaluate the impact of scheduling algorithms on system performance and select the most suitable algorithm.\n4. Implement a dynamic scheduling mechanism to adapt to changing system conditions.\n5. Utilize modeling and simulation techniques to evaluate the performance of different mapping strategies.\n6. Consider the trade-offs between processing power, communication overhead, and system performance when mapping software components to ECUs.\n7. Develop a framework for evaluating and optimizing the mapping of software components to ECUs.",
+      "marks": 10
+    },
+    {
+      "number": 13,
+      "question": "Investigate the impact of bus latency on control performance in a cyber-physical system and propose a solution to mitigate its effects.",
+      "unit": "2",
+      "co": "CO2",
+      "blooms": "L4",
+      "answer": "1. Analyze the relationship between bus latency and control performance using modeling and simulation techniques.\n2. Identify the critical components that contribute to bus latency and propose optimization strategies.\n3. Implement a priority-based scheduling mechanism to minimize bus latency.\n4. Utilize data compression techniques to reduce the amount of data transmitted over the bus.\n5. Implement a feedback control mechanism to adjust the system's behavior in response to bus latency.\n6. Utilize machine learning techniques to predict and prevent bus latency.\n7. Propose a redundant communication architecture to ensure continued system operation in the event of bus latency.",
+      "marks": 10
+    },
+    {
+      "number": 14,
+      "question": "Integrate a comprehensive approach to model complex CPS systems using Timed Automata.",
+      "unit": "3",
+      "co": "CO5",
+      "blooms": "L6",
+      "answer": "1. Timed Automata can be used to model complex CPS systems by representing the system's behavior as a set of timed transitions between states.\n2. The model can capture the system's timing constraints and behavior over time, enabling the analysis of complex CPS systems.\n3. Timed Automata can be used to model both discrete and continuous-time systems, making it a versatile tool for CPS modeling.\n4. The model can be used to analyze the system's behavior under different timing constraints and scenarios.\n5. Timed Automata can be used to model complex CPS systems with multiple interacting components and timing constraints.\n6. The model can be used to analyze the system's behavior under different timing constraints and scenarios, enabling the identification of potential timing-related issues.\n7. Timed Automata can be used to model complex CPS systems with non-deterministic behavior, enabling the analysis of complex CPS systems with uncertain timing constraints.",
+      "marks": 10
+    },
+    {
+      "number": 15,
+      "question": "Appraise a formal analysis approach to determine the reachability of a CPS system using Flow Pipe Construction.",
+      "unit": "3",
+      "co": "CO3",
+      "blooms": "L5",
+      "answer": "1. Flow Pipe Construction can be used to determine the reachability of a CPS system by constructing a flow pipe that represents the system's behavior.\n2. The flow pipe can be used to analyze the system's behavior under different scenarios and timing constraints.\n3. Flow Pipe Construction can be used to determine the reachability of a CPS system by identifying the set of reachable states and transitions.\n4. The flow pipe can be used to analyze the system's behavior under different timing constraints and scenarios, enabling the identification of potential timing-related issues.\n5. Flow Pipe Construction can be used to determine the reachability of a CPS system with multiple interacting components and timing constraints.\n6. The flow pipe can be used to analyze the system's behavior under different timing constraints and scenarios, enabling the identification of potential timing-related issues.\n7. Flow Pipe Construction can be used to determine the reachability of a CPS system with non-deterministic behavior, enabling the analysis of complex CPS systems with uncertain timing constraints.",
+      "marks": 10
+    },
+    {
+      "number": 16,
+      "question": "Plan a comprehensive approach to analyze the weakest preconditions of a CPS system using Bounded Model Checking.",
+      "unit": "3",
+      "co": "CO3",
+      "blooms": "L6",
+      "answer": "1. Bounded Model Checking can be used to analyze the weakest preconditions of a CPS system by representing the system's behavior as a set of transitions between states.\n2. The model can capture the system's behavior under different timing constraints and scenarios, enabling the identification of potential timing-related issues.\n3. Bounded Model Checking can be used to analyze the weakest preconditions of a CPS system with multiple interacting components and timing constraints.\n4. The model can be used to analyze the system's behavior under different timing constraints and scenarios, enabling the identification of potential timing-related issues.\n5. Bounded Model Checking can be used to analyze the weakest preconditions of a CPS system with non-deterministic behavior, enabling the analysis of complex CPS systems with uncertain timing constraints.\n6. The model can be used to analyze the system's behavior under different timing constraints and scenarios, enabling the identification of potential timing-related issues.\n7. Bounded Model Checking can be used to analyze the weakest preconditions of a CPS system with complex timing constraints, enabling the identification of potential timing-related issues.",
+      "marks": 10
+    }
+  ],
+  "distributions": {
+    "co": {
+      "CO1": 2,
+      "CO2": 32,
+      "CO3": 22,
+      "CO4": 2,
+      "CO5": 12
+    },
+    "blooms": {
+      "L1": 4,
+      "L2": 3,
+      "L3": 0,
+      "L4": 11,
+      "L5": 10,
+      "L6": 42
+    }
+  },
+  "cos_definitions": [
+    {
+      "id": "CO1",
+      "description": "Analyze the challenges in implementing a cyber-physical system from a computational\r\nperspective",
+      "blooms": "L4"
+    },
+    {
+      "id": "CO2",
+      "description": "Apply real-valued and dense time real-time systems with software-based discrete automated\r\ncontrol",
+      "blooms": "L3"
+    },
+    {
+      "id": "CO3",
+      "description": "Evaluate the formalmethodsindesigningcyber-physical systems",
+      "blooms": "L5"
+    },
+    {
+      "id": "CO4",
+      "description": "Understand and apply cyber-physical system problems for safety assurance and security aspects",
+      "blooms": "L2"
+    },
+    {
+      "id": "CO5",
+      "description": "CreateHybrid Automata Modeling",
+      "blooms": "L6"
+    }
+  ]
+}

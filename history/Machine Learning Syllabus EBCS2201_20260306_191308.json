@@ -1,0 +1,255 @@
+{
+  "exam_type": "CAT2",
+  "part_a": [
+    {
+      "number": 1,
+      "unit": "CAT1",
+      "co": "CO1",
+      "blooms": "L1",
+      "question": "List the various machine learning algorithms.",
+      "options": {
+        "A": "Decision Trees",
+        "B": "K-Means Clustering",
+        "C": "Random Forests",
+        "D": "Support Vector Machines"
+      },
+      "answer": "A",
+      "marks": 1
+    },
+    {
+      "number": 2,
+      "unit": "CAT1",
+      "co": "CO1",
+      "blooms": "L2",
+      "question": "Explain the significance of data pre-processing in machine learning.",
+      "options": {
+        "A": "Enhances feature extraction",
+        "B": "Increases computational complexity",
+        "C": "Reduces overfitting",
+        "D": "Improves model accuracy"
+      },
+      "answer": "D",
+      "marks": 1
+    },
+    {
+      "number": 3,
+      "unit": "CAT1",
+      "co": "CO2",
+      "blooms": "L3",
+      "question": "Apply linear regression to design a predictive model for a dataset.",
+      "options": {
+        "A": "Use a linear regression algorithm",
+        "B": "Select a suitable feature subset",
+        "C": "Evaluate the model's performance metrics",
+        "D": "Split the data into training and testing sets"
+      },
+      "answer": "A",
+      "marks": 1
+    },
+    {
+      "number": 4,
+      "unit": "CAT1",
+      "co": "CO3",
+      "blooms": "L3",
+      "question": "Apply K-Means clustering to group similar data points.",
+      "options": {
+        "A": "Repeat the clustering process until convergence",
+        "B": "Assign each data point to the closest cluster",
+        "C": "Update the centroids based on the cluster assignments",
+        "D": "Initialize the centroids randomly"
+      },
+      "answer": "D",
+      "marks": 1
+    },
+    {
+      "number": 5,
+      "unit": "CAT1",
+      "co": "CO4",
+      "blooms": "L5",
+      "question": "Evaluate the performance of a neural network model using cross-validation.",
+      "options": {
+        "A": "Compare the model's performance across different folds",
+        "B": "Split the data into training and testing sets",
+        "C": "Train the model on the training set",
+        "D": "Evaluate the model's performance on the testing set"
+      },
+      "answer": "B",
+      "marks": 1
+    },
+    {
+      "number": 6,
+      "unit": "CAT2",
+      "co": "CO2",
+      "blooms": "L3",
+      "question": "Apply logistic regression to design a predictive model for a binary classification problem.",
+      "options": {
+        "A": "Evaluate the model's performance metrics",
+        "B": "Split the data into training and testing sets",
+        "C": "Use a logistic regression algorithm",
+        "D": "Select a suitable feature subset"
+      },
+      "answer": "C",
+      "marks": 1
+    },
+    {
+      "number": 7,
+      "unit": "CAT2",
+      "co": "CO3",
+      "blooms": "L3",
+      "question": "Apply hierarchical clustering to group similar data points.",
+      "options": {
+        "A": "Repeat the clustering process until convergence",
+        "B": "Update the cluster assignments based on the data points",
+        "C": "Initialize the clusters randomly",
+        "D": "Assign each data point to the closest cluster"
+      },
+      "answer": "C",
+      "marks": 1
+    },
+    {
+      "number": 8,
+      "unit": "CAT2",
+      "co": "CO4",
+      "blooms": "L5",
+      "question": "Evaluate the performance of a PCA model using cross-validation.",
+      "options": {
+        "A": "Split the data into training and testing sets",
+        "B": "Compare the model's performance across different folds",
+        "C": "Evaluate the model's performance on the testing set",
+        "D": "Apply PCA to the training set"
+      },
+      "answer": "A",
+      "marks": 1
+    },
+    {
+      "number": 9,
+      "unit": "CAT3",
+      "co": "CO2",
+      "blooms": "L3",
+      "question": "Apply decision tree classification to design a predictive model for a dataset.",
+      "options": {
+        "A": "Evaluate the model's performance metrics",
+        "B": "Split the data into training and testing sets",
+        "C": "Select a suitable feature subset",
+        "D": "Use a decision tree algorithm"
+      },
+      "answer": "D",
+      "marks": 1
+    },
+    {
+      "number": 10,
+      "unit": "CAT3",
+      "co": "CO3",
+      "blooms": "L3",
+      "question": "Apply probabilistic PCA to reduce the dimensionality of a dataset.",
+      "options": {
+        "A": "Reduce the dimensionality of the data",
+        "B": "Evaluate the model's performance metrics",
+        "C": "Model the data using a probabilistic PCA",
+        "D": "Apply PCA to the data"
+      },
+      "answer": "D",
+      "marks": 1
+    }
+  ],
+  "part_b": [
+    {
+      "number": 11,
+      "question": "Formulate a strategy to optimize the performance of a multivariate regression model.",
+      "unit": "2",
+      "co": "CO2",
+      "blooms": "L6",
+      "answer": "1. Regularization techniques can be employed to prevent overfitting in multivariate regression models. 2. Feature selection methods can be used to identify the most relevant features and reduce dimensionality. 3. Data preprocessing techniques such as normalization and standardization can improve the model's performance. 4. Ensemble methods like bagging and boosting can be used to combine the predictions of multiple models. 5. Hyperparameter tuning can be performed to optimize the model's performance. 6. Cross-validation can be used to evaluate the model's performance on unseen data. 7. The model's performance can be evaluated using metrics such as mean squared error and R-squared.",
+      "marks": 10
+    },
+    {
+      "number": 12,
+      "question": "Develop a decision tree-based method for classification and regression tasks.",
+      "unit": "2",
+      "co": "CO3",
+      "blooms": "L6",
+      "answer": "1. Decision trees can be constructed using a top-down approach, where the tree is split based on the most informative feature. 2. The Gini impurity or entropy can be used as the splitting criterion to determine the best feature to split on. 3. The decision tree can be pruned to prevent overfitting and improve the model's generalizability. 4. The model's performance can be evaluated using metrics such as accuracy and precision. 5. The decision tree can be used for both classification and regression tasks by modifying the output node to produce a continuous value. 6. The model can be improved by using ensemble methods such as bagging and boosting. 7. The decision tree can be visualized using tools such as graphviz to gain insights into the model's structure.",
+      "marks": 10
+    },
+    {
+      "number": 13,
+      "question": "Design an ensemble method to improve the performance of a K-Nearest Neighbor classifier.",
+      "unit": "2",
+      "co": "CO4",
+      "blooms": "L6",
+      "answer": "1. Bagging can be used to combine the predictions of multiple K-Nearest Neighbor classifiers. 2. Boosting can be used to combine the predictions of multiple K-Nearest Neighbor classifiers, where each classifier is trained on a different subset of the data. 3. The model's performance can be evaluated using metrics such as accuracy and precision. 4. The ensemble method can be improved by using techniques such as feature selection and hyperparameter tuning. 5. The model can be improved by using a different distance metric, such as the Mahalanobis distance. 6. The model can be improved by using a different kernel function, such as the Gaussian kernel. 7. The model can be improved by using a different voting scheme, such as the majority vote.",
+      "marks": 10
+    },
+    {
+      "number": 14,
+      "question": "Discuss a strategy to select the optimal number of clusters for K-Means clustering.",
+      "unit": "3",
+      "co": "CO3",
+      "blooms": "L2",
+      "answer": "1. The optimal number of clusters can be determined using the elbow method, where the sum of squared errors is plotted against the number of clusters, and the point at which the rate of decrease slows down is chosen as the optimal number of clusters. 2. Another approach is to use the silhouette method, which measures the separation between clusters and the cohesion within clusters. 3. The silhouette score can be used to determine the optimal number of clusters, with higher scores indicating better separation and cohesion. 4. Additionally, the number of clusters can be determined by visual inspection of the cluster assignments and the cluster centroids. 5. It is also possible to use the gap statistic method, which compares the sum of squared errors of the data points to the sum of squared errors of the data points in a random dataset. 6. The gap statistic can be used to determine the optimal number of clusters, with higher values indicating better separation. 7. Furthermore, the number of clusters can be determined by using the DBSCAN algorithm, which groups data points into clusters based on density and proximity. 8. The DBSCAN algorithm can be used to determine the optimal number of clusters, with higher values indicating better separation.",
+      "marks": 10
+    },
+    {
+      "number": 15,
+      "question": "What a plan to reduce the dimensionality of a high-dimensional dataset using Principal Component Analysis (PCA).",
+      "unit": "3",
+      "co": "CO3",
+      "blooms": "L1",
+      "answer": "1. The first step is to standardize the data by subtracting the mean and dividing by the standard deviation for each feature. 2. Next, calculate the covariance matrix of the data, which represents the variance and covariance between each pair of features. 3. Then, calculate the eigenvectors and eigenvalues of the covariance matrix, which represent the directions and magnitudes of the principal components. 4. Select the top k eigenvectors corresponding to the largest eigenvalues, which represent the principal components that capture the most variance in the data. 5. Project the original data onto the selected principal components to reduce the dimensionality. 6. The resulting data can be used for further analysis or visualization. 7. Additionally, the explained variance ratio can be used to determine the number of principal components to retain, with higher values indicating more variance explained. 8. Furthermore, the scree plot can be used to determine the number of principal components to retain, with the point at which the rate of decrease slows down indicating the optimal number of components.",
+      "marks": 10
+    },
+    {
+      "number": 16,
+      "question": "Describe an experiment to compare the performance of Probabilistic PCA and Independent Components Analysis (ICA) on a dataset with mixed Gaussian and non-Gaussian features.",
+      "unit": "3",
+      "co": "CO4",
+      "blooms": "L2",
+      "answer": "1. The first step is to collect a dataset with mixed Gaussian and non-Gaussian features, such as images or audio signals. 2. Next, apply Probabilistic PCA to the dataset and evaluate its performance using metrics such as reconstruction error and dimensionality reduction. 3. Then, apply ICA to the dataset and evaluate its performance using metrics such as independence and non-Gaussianity. 4. Compare the performance of Probabilistic PCA and ICA on the dataset, using metrics such as reconstruction error and dimensionality reduction. 5. The results can be visualized using techniques such as scatter plots and histograms. 6. Additionally, the performance of Probabilistic PCA and ICA can be compared on different types of datasets, such as images and audio signals. 7. Furthermore, the results can be used to determine the optimal algorithm for dimensionality reduction and feature extraction. 8. The experiment can be repeated with different parameters and hyperparameters to evaluate the robustness of the results.",
+      "marks": 10
+    }
+  ],
+  "distributions": {
+    "co": {
+      "CO1": 2,
+      "CO2": 13,
+      "CO3": 33,
+      "CO4": 22,
+      "CO5": 0
+    },
+    "blooms": {
+      "L1": 11,
+      "L2": 21,
+      "L3": 6,
+      "L4": 0,
+      "L5": 2,
+      "L6": 30
+    }
+  },
+  "cos_definitions": [
+    {
+      "id": "CO1",
+      "description": "Understand various machine learning algorithms and terminologies and perform data pre-processing",
+      "blooms": "L2"
+    },
+    {
+      "id": "CO2",
+      "description": "Apply appropriate supervised learning algorithms to design predictive models to solve any given problem",
+      "blooms": "L3"
+    },
+    {
+      "id": "CO3",
+      "description": "Apply appropriate unsupervised learning algorithms and develop applications for performing clustering and dimensionality reduction",
+      "blooms": "L3"
+    },
+    {
+      "id": "CO4",
+      "description": "Evaluate the solutions for complex problems using artificial neural networks and kernel machines",
+      "blooms": "L5"
+    },
+    {
+      "id": "CO5",
+      "description": "Understand and apply probabilistic graphical models for suitable applications",
+      "blooms": "L2"
+    }
+  ]
+}
