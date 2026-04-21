@@ -20,6 +20,13 @@ st.markdown("""
         background-color: #0a0a0a;
         color: #ffffff;
     }
+
+    /* Hide Streamlit Cloud top-right actions (Share/Star/Edit/GitHub/Menu) */
+    [data-testid="stHeaderActionElements"],
+    [data-testid="stToolbar"],
+    [data-testid="stDecoration"] {
+        display: none !important;
+    }
     
     /* Simple header */
     h1 {
