@@ -40,9 +40,18 @@ st.markdown("""
         box-sizing: border-box;
     }
 
-    /* Hide only top-right action elements, not the whole header/toolbar */
-    [data-testid="stHeaderActionElements"] {
+    /* Hide Streamlit Cloud top-right action buttons without hiding the sidebar toggle */
+    [data-testid="stHeaderActionElements"],
+    [data-testid="stHeaderActionElements"] * {
         display: none !important;
+        visibility: hidden !important;
+    }
+
+    /* Hide extra top-right toolbar buttons on hosted deployments */
+    [data-testid="stToolbarActions"],
+    [data-testid="stToolbarActions"] * {
+        display: none !important;
+        visibility: hidden !important;
     }
     
     /* Simple header */
