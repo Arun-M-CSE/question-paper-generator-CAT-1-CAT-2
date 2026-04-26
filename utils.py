@@ -1,3 +1,4 @@
+import os
 import re
 import random
 import time
@@ -9,6 +10,27 @@ import json
 from fpdf import FPDF
 import matplotlib.pyplot as plt
 import tempfile
+
+client = None
+
+
+def set_groq_api_key(api_key):
+    """Configure the Groq client from a user-provided API key."""
+    global client
+    cleaned_key = (api_key or "").strip()
+    if not cleaned_key:
+        client = None
+        return None
+
+    client = Groq(api_key=cleaned_key)
+    return client
+
+
+def get_groq_client():
+    """Return the configured Groq client or raise a helpful error."""
+    if client is None:
+        raise RuntimeError("Groq API key is not configured. Enter it in the sidebar first.")
+    return client
 
 def extract_text_from_file(uploaded_file):
     """Extracts text from uploaded file based on its type."""
@@ -148,13 +170,14 @@ def extract_units(syllabus_text):
     Handlers various separators like 'UNIT-I', 'UNIT - II', 'UNIT – III', etc.
     """
     # More flexible patterns that handle hyphens, dashes and extra spaces
-    # Matches 'UNIT' followed by optional non-word chars, then the Roman/Arabic number
-    u1_patterns = [r"UNIT[\s\W]*(?:I|1)(?![I1\w])"]
-    u2_patterns = [r"UNIT[\s\W]*(?:II|2)(?![I2\w])"]
-    u3_patterns = [r"UNIT[\s\W]*(?:III|3)(?![I3\w])"]
+    # Matches 'UNIT' or 'MODULE' or 'PART' followed by optional non-word chars, then the Roman/Arabic number
+    # Negative lookahead (?![I\d]) prevents matching UNIT I as the start of UNIT II, but allows following words like SOFTWARE.
+    u1_patterns = [r"(?:UNIT|MODULE|PART)[\s\W]*(?:I|1)(?![I\d])", r"(?:^|[\n\r])\s*(?:UNIT|MODULE|PART)\s*1\s*[:\-]"]
+    u2_patterns = [r"(?:UNIT|MODULE|PART)[\s\W]*(?:II|2)(?![I\d])", r"(?:^|[\n\r])\s*(?:UNIT|MODULE|PART)\s*2\s*[:\-]"]
+    u3_patterns = [r"(?:UNIT|MODULE|PART)[\s\W]*(?:III|3)(?![I\d])", r"(?:^|[\n\r])\s*(?:UNIT|MODULE|PART)\s*3\s*[:\-]"]
     
     # Improved terminators to match Unit 4, 5 and other common end-of-unit markers
-    terminators = r"UNIT[\s\W]*(?:IV|4|V|5|VI|6)|Total\s*Hours|TEXT\s*BOOKS|REFERENCES|Note:|Total\s*:"
+    terminators = r"(?:UNIT|MODULE|PART)[\s\W]*(?:IV|4|V|5|VI|6)|Total\s*Hours|TEXT\s*BOOKS|REFERENCES|Note:|Total\s*:|Outcome|Syllabus|Objective"
 
     unit1 = ""
     unit2 = ""
@@ -162,17 +185,17 @@ def extract_units(syllabus_text):
     
     all_positions = []
     
-    # Use re.IGNORECASE for all matches
+    # Use re.IGNORECASE and re.MULTILINE for all matches
     for pattern in u1_patterns:
-        matches = list(re.finditer(pattern, syllabus_text, re.IGNORECASE))
+        matches = list(re.finditer(pattern, syllabus_text, re.IGNORECASE | re.MULTILINE))
         for match in matches: all_positions.append(('u1', match.start(), match.end()))
     
     for pattern in u2_patterns:
-        matches = list(re.finditer(pattern, syllabus_text, re.IGNORECASE))
+        matches = list(re.finditer(pattern, syllabus_text, re.IGNORECASE | re.MULTILINE))
         for match in matches: all_positions.append(('u2', match.start(), match.end()))
     
     for pattern in u3_patterns:
-        matches = list(re.finditer(pattern, syllabus_text, re.IGNORECASE))
+        matches = list(re.finditer(pattern, syllabus_text, re.IGNORECASE | re.MULTILINE))
         for match in matches: all_positions.append(('u3', match.start(), match.end()))
     
     all_positions.sort(key=lambda x: x[1])
@@ -203,8 +226,8 @@ def extract_cos(syllabus_text):
     
     # Updated pattern to capture Bloom's level if it exists (e.g., [L2])
     # Matches: CO1: Description... [L2]
-    strict_pattern = r"(?:^|[\n\r])\s*(CO\d+)\s*[:\-\.]\s*(.+?)(?=\s*\[L\d\]|Mapping|\n\s*Mapping|PO\d|[\n\r]|$)(?:\s*\[(L\d)\])?"
-    matches = list(re.finditer(strict_pattern, syllabus_text, re.IGNORECASE))
+    strict_pattern = r"(?:^|[\n\r])\s*(CO\d+)\s*[:\-\.\s]*\s*(.+?)(?=\s*\[L\d\]|Mapping|\n\s*Mapping|PO\d|[\n\r]|$)(?:\s*\[(L\d)\])?"
+    matches = list(re.finditer(strict_pattern, syllabus_text, re.IGNORECASE | re.MULTILINE))
     
     if matches:
         for match in matches:
@@ -287,26 +310,19 @@ def split_syllabus_by_topics(text, n=3):
     content = re.sub(r"^UNIT[\s\W]*(?:[IV\d]+)", "", text, flags=re.IGNORECASE).strip()
     
     # 2. Remove the unit title and hours (e.g., WORD LEVEL ANALYSIS 9 Hrs)
-    # This matches everything until "9 Hrs" or "9Hrs" at the start of the remaining text
-    content = re.sub(r"^(?:.*?)(?:\d+\s*(?:Hrs|Hours))", "", content, flags=re.IGNORECASE).strip()
+    # Use DOTALL to handle cases where the title might span multiple lines
+    content = re.sub(r"^(?:.*?)(?:\d+\s*(?:Hrs|Hours))", "", content, flags=re.IGNORECASE | re.DOTALL).strip()
     
-    # Clean up any leftover title parts if they didn't end with "Hrs"
-    # (Matches common titles before the first comma if they start the string)
-    if content and not any(delim in content[:20] for delim in [',', '-', '–']):
-         # If the first part doesn't look like a topic (no delimiters in first 20 chars), 
-         # it might be a remnant of a title. But this is risky.
-         pass
+    # Split by common delimiters: comma, semicolon, em-dash
+    items = [item.strip() for item in re.split(r",|;|–", content) if item.strip()]
     
-    # Split by comma or bullet-like hyphens (hyphen surrounded by spaces or at boundaries)
-    # We use a regex that matches commas OR hyphens/dashes that look like separators
-    delimiters = r",|–|(?<=\s)-(?=\s)"
-    items = [item.strip() for item in re.split(delimiters, content) if item.strip()]
-    
-    if len(items) < n:
-        # Fallback if too few delimiters: split by lines
-        items = [item.strip() for item in content.split('\n') if item.strip()]
+    # Fallback: If we only got 1 item, try splitting by hyphens
+    if len(items) <= 1:
+        # Only split by hyphens if there are several of them (likely separators)
+        if content.count('-') >= 2:
+            items = [item.strip() for item in re.split(r"-", content) if item.strip()]
         
-    if not items:
+    if not items or (len(items) == 1 and not items[0]):
         # Final fallback
         items = [content] if content else ["Syllabus Content"]
 
@@ -330,18 +346,9 @@ def split_syllabus_by_topics(text, n=3):
     
     return parts
 
-def generate_questions(u1, u2, u3, exam_type, cos, difficulty_config, blooms_taxonomy, subject_name="Subject", exclude_questions=None, api_key=None):
+def generate_questions(u1, u2, u3, exam_type, cos, difficulty_config, blooms_taxonomy, subject_name="Subject", exclude_questions=None):
     """Generates questions using Groq LLM with aggressive prompt optimization and CO mapping."""
-
-    if not api_key or not api_key.strip():
-        return {
-            "exam_type": exam_type,
-            "part_a": [],
-            "part_b": [],
-            "error": "Groq API key is required to generate questions."
-        }
-
-    client = Groq(api_key=api_key.strip())
+    client = get_groq_client()
     
     # 1. Prepare CO context for prompt
     co_context = "\n".join([f"- {c['id']}: {c['description']} (Target: {c.get('blooms', 'Any')})" for c in cos])
@@ -638,6 +645,8 @@ def generate_questions(u1, u2, u3, exam_type, cos, difficulty_config, blooms_tax
         q['number'] = i + 1
         if exam_type == "CAT1":
             q['unit'] = "1"
+            # user might want Q1-10 from Unit 1, but sometimes they want a mix. 
+            # For CAT1 we stick to Unit 1 as per conventional rules unless specified.
         else:
             # Always enforce correct unit for CAT2: Q1-5 from Unit 2, Q6-10 from Unit 3
             q['unit'] = "2" if i < 5 else "3"

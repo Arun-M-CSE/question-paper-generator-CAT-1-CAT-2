@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from utils import extract_units, extract_cos, generate_questions, BLOOMS_TAXONOMY, extract_text_from_file, split_syllabus_by_topics
+from utils import extract_units, extract_cos, generate_questions, BLOOMS_TAXONOMY, extract_text_from_file, split_syllabus_by_topics, set_groq_api_key
 from formatting import create_pdf, create_word_doc
 import json
 import os
@@ -16,15 +16,32 @@ st.set_page_config(
 st.markdown("""
 <style>
     /* Dark background */
+    html, body {
+        overflow-x: clip;
+        max-width: 100%;
+    }
+
     .stApp {
         background-color: #0a0a0a;
         color: #ffffff;
+        overflow-x: clip;
+        max-width: 100vw;
     }
 
-    /* Hide Streamlit Cloud top-right actions (Share/Star/Edit/GitHub/Menu) */
-    [data-testid="stHeaderActionElements"],
-    [data-testid="stToolbar"],
-    [data-testid="stDecoration"] {
+    [data-testid="stAppViewContainer"],
+    [data-testid="stAppViewBlockContainer"],
+    .main,
+    .block-container {
+        overflow-x: clip;
+        max-width: 100vw;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    /* Hide only top-right action elements, not the whole header/toolbar */
+    [data-testid="stHeaderActionElements"] {
         display: none !important;
     }
     
@@ -119,15 +136,19 @@ st.markdown("""
         left: 70px;
         bottom: 12px;
         z-index: 9996;
-        width: min(480px, calc(100vw - 84px));
+        width: fit-content;
+        max-width: calc(100vw - 84px);
+        display: inline-flex;
+        flex-direction: column;
+        align-items: flex-start;
         background: rgba(255, 255, 255, 0.12);
         border: 1px solid #7a7a7a;
         border-radius: 8px;
         color: #f4f4f4;
-        font-size: 0.95rem;
+        font-size: 0.92rem;
         font-weight: 600;
         line-height: 1.45;
-        padding: 0.6rem 0.75rem;
+        padding: 0.55rem 0.7rem;
         box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
         backdrop-filter: blur(2px);
         transition: left 0.25s ease, width 0.25s ease;
@@ -136,19 +157,20 @@ st.markdown("""
     [data-testid="stSidebar"][aria-expanded="true"] ~ [data-testid="stAppViewContainer"] .page-credit,
     [data-testid="stSidebar"][aria-expanded="true"] ~ div .page-credit {
         left: calc(21rem + 14px);
-        width: min(480px, calc(100vw - 21rem - 28px));
+        width: fit-content;
+        max-width: calc(100vw - 21rem - 28px);
     }
 
     [data-testid="stSidebar"][aria-expanded="false"] ~ [data-testid="stAppViewContainer"] .page-credit,
     [data-testid="stSidebar"][aria-expanded="false"] ~ div .page-credit {
         left: 70px;
-        width: min(480px, calc(100vw - 84px));
+        width: fit-content;
+        max-width: calc(100vw - 84px);
     }
 
-    /* Keep sidebar open/close controls above the credit card */
     [data-testid="collapsedControl"],
     [data-testid="stSidebarCollapseButton"] {
-        z-index: 10001 !important;
+        top: 8.5rem !important;
     }
 
     @media (max-width: 768px) {
@@ -157,28 +179,27 @@ st.markdown("""
             right: 10px;
             bottom: 8px;
             width: auto;
+            max-width: calc(100vw - 20px);
             font-size: 0.85rem;
         }
+
+        [data-testid="collapsedControl"],
+        [data-testid="stSidebarCollapseButton"] {
+            top: 7.5rem !important;
+        }
+
     }
 </style>
 """, unsafe_allow_html=True)
 
-# Main UI
-st.title("CAT Architect")
-st.caption("AI-powered question paper generator")
-
 with st.sidebar:
-    st.header("Groq API Key")
-    groq_api_key = st.text_input(
-        "Enter your Groq API key",
-        type="password",
-        key="groq_api_key_input",
-        help="Required every time before generating a question paper."
-    )
-    if not groq_api_key:
-        st.warning("API key is required. Enter it here before generating.")
+    st.header("Connection")
+    groq_api_key = st.text_input("Groq API Key", type="password", key="groq_api_key_input")
+    if groq_api_key:
+        set_groq_api_key(groq_api_key)
+        st.success("API key loaded")
     else:
-        st.success("API key added for this session.")
+        st.warning("Enter your Groq API key to enable generation")
 
 st.markdown(
     """
@@ -189,6 +210,10 @@ st.markdown(
     """,
     unsafe_allow_html=True,
 )
+
+# Main UI
+st.title("CAT Architect")
+st.caption("AI-powered question paper generator")
 
 st.markdown("---")
 
@@ -292,71 +317,67 @@ if st.session_state.get('analyzed'):
                 difficulty_config['u3'] = st.selectbox("Unit 3 Difficulty", ["Easy", "Medium", "Hard"], key="d_u3", index=1)
     
     if st.button("Generate Question Paper"):
-        if not groq_api_key or not groq_api_key.strip():
-            st.error("Groq API key is required. Enter it in the left sidebar and try again.")
-        else:
-            with st.spinner("Generating..."):
-                try:
-                    subject_name = uploaded_file.name.split('.')[0]
-                    paper = generate_questions(
-                        st.session_state['unit1'],
-                        st.session_state['unit2'], 
-                        st.session_state['unit3'], 
-                        exam_type,
-                        st.session_state['cos'], 
-                        difficulty_config, 
-                        BLOOMS_TAXONOMY,
-                        subject_name=subject_name,
-                        exclude_questions=st.session_state.get('previous_questions', []),
-                        api_key=groq_api_key
-                    )
-                    
-                    # Add newly generated questions to exclusions for next run
-                    current_qs = [q.get('question') for q in paper.get('part_a', []) if q.get('question')]
-                    current_qs += [q.get('question') for q in paper.get('part_b', []) if q.get('question')]
-                    
-                    if 'previous_questions' not in st.session_state:
-                        st.session_state['previous_questions'] = []
-                    st.session_state['previous_questions'].extend(current_qs)
-                    
-                    if 'error' in paper and not paper['part_a'] and not paper['part_b']:
-                        st.error(f"Error: {paper['error']}")
-                    else:
-                        if 'validation_errors' in paper and paper['validation_errors']:
-                            st.warning("⚠️ Potential Issues Detected:")
-                            for err in paper['validation_errors']:
-                                st.write(f"- {err}")
-                                
-                        st.session_state['paper'] = paper
-                        
-                        # Save to history
-                        import datetime
-                        ts = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-                        
-                        if not os.path.exists("history"):
-                            os.makedirs("history")
-                        
-                        safe_subject = "".join([c for c in subject_name if c.isalnum() or c in (' ', '_', '-')]).strip()
-                        with open(f"history/{safe_subject}_{ts}.json", "w") as f:
-                            json.dump(paper, f, indent=2)
-                        
-                        # Save Word file
-                        folder_name = "cat1" if paper['exam_type'] == "CAT1" else "cat2"
-                        if not os.path.exists(folder_name):
-                            os.makedirs(folder_name)
+        with st.spinner("Generating..."):
+            try:
+                subject_name = uploaded_file.name.split('.')[0]
+                paper = generate_questions(
+                    st.session_state['unit1'],
+                    st.session_state['unit2'], 
+                    st.session_state['unit3'], 
+                    exam_type,
+                    st.session_state['cos'], 
+                    difficulty_config, 
+                    BLOOMS_TAXONOMY,
+                    subject_name=subject_name,
+                    exclude_questions=st.session_state.get('previous_questions', [])
+                )
+                
+                # Add newly generated questions to exclusions for next run
+                current_qs = [q.get('question') for q in paper.get('part_a', []) if q.get('question')]
+                current_qs += [q.get('question') for q in paper.get('part_b', []) if q.get('question')]
+                
+                if 'previous_questions' not in st.session_state:
+                    st.session_state['previous_questions'] = []
+                st.session_state['previous_questions'].extend(current_qs)
+                
+                if 'error' in paper and not paper['part_a'] and not paper['part_b']:
+                    st.error(f"Error: {paper['error']}")
+                else:
+                    if 'validation_errors' in paper and paper['validation_errors']:
+                        st.warning("⚠️ Potential Issues Detected:")
+                        for err in paper['validation_errors']:
+                            st.write(f"- {err}")
                             
-                        word_filename = os.path.join(folder_name, f"{paper['exam_type']}_{safe_subject}_{ts}.docx")
-                        word_path = os.path.abspath(word_filename)
+                    st.session_state['paper'] = paper
+                    
+                    # Save to history
+                    import datetime
+                    ts = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+                    
+                    if not os.path.exists("history"):
+                        os.makedirs("history")
+                    
+                    safe_subject = "".join([c for c in subject_name if c.isalnum() or c in (' ', '_', '-')]).strip()
+                    with open(f"history/{safe_subject}_{ts}.json", "w") as f:
+                        json.dump(paper, f, indent=2)
+                    
+                    # Save Word file
+                    folder_name = "cat1" if paper['exam_type'] == "CAT1" else "cat2"
+                    if not os.path.exists(folder_name):
+                        os.makedirs(folder_name)
                         
-                        from formatting import create_word_doc
-                        saved_path = create_word_doc(paper, output_file=word_path)
-                        
-                        if saved_path:
-                            st.session_state['generated_word_file'] = saved_path
-                            st.success(f"Paper generated: {word_filename}")
-                        
-                except Exception as e:
-                    st.error(f"Error: {e}")
+                    word_filename = os.path.join(folder_name, f"{paper['exam_type']}_{safe_subject}_{ts}.docx")
+                    word_path = os.path.abspath(word_filename)
+                    
+                    from formatting import create_word_doc
+                    saved_path = create_word_doc(paper, output_file=word_path)
+                    
+                    if saved_path:
+                        st.session_state['generated_word_file'] = saved_path
+                        st.success(f"Paper generated: {word_filename}")
+                    
+            except Exception as e:
+                st.error(f"Error: {e}")
 
 # Display Paper
 if 'paper' in st.session_state:
@@ -463,5 +484,5 @@ if 'paper' in st.session_state:
             </div>
             """, unsafe_allow_html=True)
 
-if not uploaded_file:
+elif not uploaded_file:
     st.info("Upload a syllabus file to begin")

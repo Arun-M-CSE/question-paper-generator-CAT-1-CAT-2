@@ -46,13 +46,14 @@ The project has been significantly upgraded to ensure high-quality and strictly 
 ## ⚡ How to Run
 1. **Activate Virtual Environment**:
    ```powershell
-   venv\scripts\activate
+   .venv\Scripts\activate
    ```
 2. **Run the App**:
    ```powershell
    python -m streamlit run app.py
    ```
 3. **Usage**:
+   - Enter your Groq API key in the sidebar.
    - Upload your Syllabus.
    - Click "Analyze Syllabus".
    - Select Exam Type (CAT1 or CAT2) and Difficulty.
@@ -60,9 +61,9 @@ The project has been significantly upgraded to ensure high-quality and strictly 
    - Download the result.
 
 ## 📝 Requirements
-- Python 3.8+
+- Python 3.11+
 - Streamlit
-- Groq API Key (stored in `.env`)
+- Groq API Key entered in the app sidebar
 - `python-docx`
 - `fpdf`
 - `PyPDF2`

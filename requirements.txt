@@ -1,5 +1,6 @@
 streamlit
 groq
+python-dotenv
 pandas
 python-docx
 PyPDF2
