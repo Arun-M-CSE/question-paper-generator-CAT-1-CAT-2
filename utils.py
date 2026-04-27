@@ -349,6 +349,8 @@ def split_syllabus_by_topics(text, n=3):
 def generate_questions(u1, u2, u3, exam_type, cos, difficulty_config, blooms_taxonomy, subject_name="Subject", exclude_questions=None):
     """Generates questions using Groq LLM with aggressive prompt optimization and CO mapping."""
     client = get_groq_client()
+    sys_random = random.SystemRandom()
+    run_nonce = f"{int(time.time() * 1000)}-{sys_random.randint(100000, 999999)}"
     
     # 1. Prepare CO context for prompt
     co_context = "\n".join([f"- {c['id']}: {c['description']} (Target: {c.get('blooms', 'Any')})" for c in cos])
@@ -516,14 +518,15 @@ def generate_questions(u1, u2, u3, exam_type, cos, difficulty_config, blooms_tax
     """
 
     # --- PART A GENERATION ---
-    variation_seed = random.randint(1, 10000)
-    prompt_a = f"{BASE_RULES}\n{DIFFICULTY_RULES}\n{MCQ_RULES}\nSYLLABUS:\n{context_a}\n{DIVERSITY_FOOTER}\nVARIATION_SEED: {variation_seed}\nJSON:"
+    variation_seed = sys_random.randint(1, 1000000)
+    prompt_a = f"{BASE_RULES}\n{DIFFICULTY_RULES}\n{MCQ_RULES}\nSYLLABUS:\n{context_a}\n{DIVERSITY_FOOTER}\nVARIATION_SEED: {variation_seed}\nRUN_NONCE: {run_nonce}\nJSON:"
     try:
         completion_a = client.chat.completions.create(
             model="llama-3.1-8b-instant",
             messages=[{"role": "user", "content": prompt_a}],
             response_format={"type": "json_object"},
-            temperature=0.2, # Reduced for stability
+            temperature=0.85,
+            top_p=0.95,
             max_tokens=2048
         )
         data_a = json.loads(completion_a.choices[0].message.content)
@@ -538,7 +541,7 @@ def generate_questions(u1, u2, u3, exam_type, cos, difficulty_config, blooms_tax
 
     # --- PART B GENERATION (Buffered/Split for CAT2) ---
     def get_part_b(chunk_desc, count, syllabus_context, current_used, forbidden_topics_list):
-        seed = random.randint(1, 10000)
+        seed = sys_random.randint(1, 1000000)
         forbidden_s = ", ".join(list(current_used))
         forbidden_t = ", ".join(forbidden_topics_list)
         
@@ -558,13 +561,15 @@ def generate_questions(u1, u2, u3, exam_type, cos, difficulty_config, blooms_tax
         - RULE: Do NOT center the question around the same main subject as previous versions.
         
         VARIATION_SEED: {seed}
+        RUN_NONCE: {run_nonce}
         JSON:"""
         
         res = client.chat.completions.create(
             model="llama-3.1-8b-instant",
             messages=[{"role": "user", "content": p_b}],
             response_format={"type": "json_object"},
-            temperature=0.2, # Reduced for stability
+            temperature=0.85,
+            top_p=0.95,
             max_tokens=3072 # Generous tokens for answers
         )
         content = json.loads(res.choices[0].message.content)
