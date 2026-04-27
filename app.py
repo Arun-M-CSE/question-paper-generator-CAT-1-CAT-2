@@ -240,6 +240,7 @@ if uploaded_file:
         st.session_state["current_file"] = uploaded_file.name
         st.session_state["previous_questions"] = []
         st.session_state["last_cat1_signature"] = ""
+        st.session_state["last_cat1_questions"] = []
         if 'paper' in st.session_state: del st.session_state['paper']
 
     raw_text = extract_text_from_file(uploaded_file)
@@ -256,6 +257,7 @@ if uploaded_file:
             st.session_state['analyzed'] = True
             st.session_state['previous_questions'] = []
             st.session_state['last_cat1_signature'] = ""
+            st.session_state['last_cat1_questions'] = []
             st.success("Analysis Complete")
 
 # Post-Analysis
@@ -343,12 +345,23 @@ if st.session_state.get('analyzed'):
                     qs += [q.get('question') for q in doc.get('part_b', []) if q.get('question')]
                     return qs
 
+                def _extract_cat1_part_a_questions(doc):
+                    return [q.get('question') for q in doc.get('part_a', []) if q.get('question')][:10]
+
                 def _signature(questions):
                     return "||".join([_normalize_question(q) for q in questions if q])
 
                 def _overlap_count(questions, previous):
                     prev_set = {_normalize_question(q) for q in previous if q}
                     return sum(1 for q in questions if _normalize_question(q) in prev_set)
+
+                def _count_different_from_last(current_questions, last_questions):
+                    if not current_questions:
+                        return 0
+                    if not last_questions:
+                        return len(current_questions)
+                    last_set = {_normalize_question(q) for q in last_questions if q}
+                    return sum(1 for q in current_questions if _normalize_question(q) not in last_set)
 
                 paper = generate_questions(
                     st.session_state['unit1'],
@@ -362,17 +375,20 @@ if st.session_state.get('analyzed'):
                     exclude_questions=previous_questions
                 )
 
-                # CAT1 safeguard: if generation repeats too much, force one immediate retry with stricter exclusions.
+                # CAT1 safeguard: ensure at least 8/10 questions differ from the previous CAT1 generation.
                 if exam_type == "CAT1":
-                    first_qs = _extract_questions(paper)
-                    first_sig = _signature(first_qs)
-                    last_sig = st.session_state.get('last_cat1_signature', "")
-                    repeated_signature = bool(first_sig and first_sig == last_sig)
-                    overlap = _overlap_count(first_qs, previous_questions)
-                    heavy_overlap = bool(first_qs) and overlap >= max(3, int(len(first_qs) * 0.5))
+                    last_cat1_questions = st.session_state.get('last_cat1_questions', [])
+                    best_paper = paper
+                    best_qs = _extract_cat1_part_a_questions(best_paper)
+                    required_diff = min(8, len(best_qs)) if best_qs else 0
+                    best_diff = _count_different_from_last(best_qs, last_cat1_questions)
+                    max_attempts = 4  # 1 initial + up to 3 retries
 
-                    if repeated_signature or heavy_overlap:
-                        retry_exclusions = list(previous_questions) + first_qs
+                    attempt_exclusions = list(previous_questions) + best_qs
+                    for _ in range(1, max_attempts):
+                        if not last_cat1_questions or best_diff >= required_diff:
+                            break
+
                         paper_retry = generate_questions(
                             st.session_state['unit1'],
                             st.session_state['unit2'],
@@ -382,18 +398,33 @@ if st.session_state.get('analyzed'):
                             difficulty_config,
                             BLOOMS_TAXONOMY,
                             subject_name=subject_name,
-                            exclude_questions=retry_exclusions
+                            exclude_questions=attempt_exclusions
                         )
-                        retry_qs = _extract_questions(paper_retry)
-                        retry_overlap = _overlap_count(retry_qs, previous_questions)
 
-                        # Prefer retry only when it clearly improves diversity.
-                        if retry_qs and retry_overlap < overlap:
-                            paper = paper_retry
-                            first_qs = retry_qs
-                            first_sig = _signature(first_qs)
+                        retry_qs = _extract_cat1_part_a_questions(paper_retry)
+                        retry_diff = _count_different_from_last(retry_qs, last_cat1_questions)
 
-                    st.session_state['last_cat1_signature'] = first_sig
+                        if retry_diff > best_diff:
+                            best_paper = paper_retry
+                            best_qs = retry_qs
+                            best_diff = retry_diff
+                            required_diff = min(8, len(best_qs)) if best_qs else 0
+
+                        attempt_exclusions.extend(retry_qs)
+
+                    paper = best_paper
+                    final_cat1_qs = _extract_cat1_part_a_questions(paper)
+                    final_required_diff = min(8, len(final_cat1_qs)) if final_cat1_qs else 0
+                    final_diff = _count_different_from_last(final_cat1_qs, last_cat1_questions)
+
+                    if last_cat1_questions and final_cat1_qs and final_diff < final_required_diff:
+                        st.warning(
+                            f"CAT1 diversity target not fully met: {final_diff}/{len(final_cat1_qs)} "
+                            "questions differ from the last generated CAT1 set."
+                        )
+
+                    st.session_state['last_cat1_signature'] = _signature(final_cat1_qs)
+                    st.session_state['last_cat1_questions'] = final_cat1_qs
                  
                 # Add newly generated questions to exclusions for next run
                 current_qs = _extract_questions(paper)
