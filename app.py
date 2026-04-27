@@ -239,6 +239,7 @@ if uploaded_file:
         st.session_state["cos"] = []
         st.session_state["current_file"] = uploaded_file.name
         st.session_state["previous_questions"] = []
+        st.session_state["last_cat1_signature"] = ""
         if 'paper' in st.session_state: del st.session_state['paper']
 
     raw_text = extract_text_from_file(uploaded_file)
@@ -254,6 +255,7 @@ if uploaded_file:
             st.session_state['cos'] = cos
             st.session_state['analyzed'] = True
             st.session_state['previous_questions'] = []
+            st.session_state['last_cat1_signature'] = ""
             st.success("Analysis Complete")
 
 # Post-Analysis
@@ -329,21 +331,72 @@ if st.session_state.get('analyzed'):
         with st.spinner("Generating..."):
             try:
                 subject_name = uploaded_file.name.split('.')[0]
+                previous_questions = st.session_state.get('previous_questions', [])
+
+                def _normalize_question(text):
+                    if not text:
+                        return ""
+                    return " ".join(str(text).strip().lower().split())
+
+                def _extract_questions(doc):
+                    qs = [q.get('question') for q in doc.get('part_a', []) if q.get('question')]
+                    qs += [q.get('question') for q in doc.get('part_b', []) if q.get('question')]
+                    return qs
+
+                def _signature(questions):
+                    return "||".join([_normalize_question(q) for q in questions if q])
+
+                def _overlap_count(questions, previous):
+                    prev_set = {_normalize_question(q) for q in previous if q}
+                    return sum(1 for q in questions if _normalize_question(q) in prev_set)
+
                 paper = generate_questions(
                     st.session_state['unit1'],
-                    st.session_state['unit2'], 
-                    st.session_state['unit3'], 
+                    st.session_state['unit2'],
+                    st.session_state['unit3'],
                     exam_type,
-                    st.session_state['cos'], 
-                    difficulty_config, 
+                    st.session_state['cos'],
+                    difficulty_config,
                     BLOOMS_TAXONOMY,
                     subject_name=subject_name,
-                    exclude_questions=st.session_state.get('previous_questions', [])
+                    exclude_questions=previous_questions
                 )
-                
+
+                # CAT1 safeguard: if generation repeats too much, force one immediate retry with stricter exclusions.
+                if exam_type == "CAT1":
+                    first_qs = _extract_questions(paper)
+                    first_sig = _signature(first_qs)
+                    last_sig = st.session_state.get('last_cat1_signature', "")
+                    repeated_signature = bool(first_sig and first_sig == last_sig)
+                    overlap = _overlap_count(first_qs, previous_questions)
+                    heavy_overlap = bool(first_qs) and overlap >= max(3, int(len(first_qs) * 0.5))
+
+                    if repeated_signature or heavy_overlap:
+                        retry_exclusions = list(previous_questions) + first_qs
+                        paper_retry = generate_questions(
+                            st.session_state['unit1'],
+                            st.session_state['unit2'],
+                            st.session_state['unit3'],
+                            exam_type,
+                            st.session_state['cos'],
+                            difficulty_config,
+                            BLOOMS_TAXONOMY,
+                            subject_name=subject_name,
+                            exclude_questions=retry_exclusions
+                        )
+                        retry_qs = _extract_questions(paper_retry)
+                        retry_overlap = _overlap_count(retry_qs, previous_questions)
+
+                        # Prefer retry only when it clearly improves diversity.
+                        if retry_qs and retry_overlap < overlap:
+                            paper = paper_retry
+                            first_qs = retry_qs
+                            first_sig = _signature(first_qs)
+
+                    st.session_state['last_cat1_signature'] = first_sig
+                 
                 # Add newly generated questions to exclusions for next run
-                current_qs = [q.get('question') for q in paper.get('part_a', []) if q.get('question')]
-                current_qs += [q.get('question') for q in paper.get('part_b', []) if q.get('question')]
+                current_qs = _extract_questions(paper)
                 
                 if 'previous_questions' not in st.session_state:
                     st.session_state['previous_questions'] = []
